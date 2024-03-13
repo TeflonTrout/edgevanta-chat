@@ -2,6 +2,10 @@
 
 Welcome to the Edgevanta Chat Application! This is a basic chat application built using TypeScript, Next.js 13, Tailwind CSS, Convex, and Vercel for hosting.
 
+## View Live Chat App
+
+- The Live version can be viewed [HERE](https://edgevanta-chat.vercel.app)
+
 ## Features
 
 - User-friendly interface for sending and receiving messages.
