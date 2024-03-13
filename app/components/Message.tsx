@@ -9,6 +9,7 @@ interface MessageProps {
   sender: string;
   isCurrentSender: boolean;
   timestamp: number;
+  ref?: any;
 }
 
 const Message = ({
