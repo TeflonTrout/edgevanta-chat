@@ -14,14 +14,14 @@ const MessageTerminal = () => {
   const path = usePathname();
   // Parse the current route and set it to the sender
   // And capitalize sender
-  let messageSender = path.replace("/", "");
-  messageSender = messageSender[0].toUpperCase() + messageSender.slice(1);
+  let messageSender = path.split("/")?.[2];
+  messageSender = messageSender?.[0].toUpperCase() + messageSender.slice(1);
   const createMessage = useMutation(api.messages.createMessage);
 
   // Loading listener
   useEffect(() => {
+    setIsLoading(false);
     if (messages?.length && messages?.length > 0) {
-      setIsLoading(false);
     }
   }, [messages]);
 
@@ -40,19 +40,19 @@ const MessageTerminal = () => {
   };
 
   return (
-    <div className="flex flex-col w-full max-h-full sm:max-w-2/3 justify-start items-center bg-zinc-200 text-black">
+    <div className="flex flex-col w-full max-h-full sm:max-w-2/3 justify-start items-center bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white">
       <div
-        className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar border-zinc-800"
+        className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar"
         style={{ maxHeight: "70vh" }}
       >
         {isLoading ? (
-          <div className="flex flex-col w-full h-svh justify-center items-center border rounded border-zinc-800">
+          <div className="flex flex-col w-full h-svh justify-center items-center border rounded border-zinc-800 bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white">
             <Loading />
           </div>
         ) : (
           <div
             ref={listRef}
-            className="flex flex-col w-full h-svh justify-start py-6 px-4 pb-0 overflow-y-auto overflow-x-hidden"
+            className="flex flex-col w-full h-svh justify-start py-6 px-4 pb-0 overflow-y-auto overflow-x-hidden bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white"
           >
             {messages?.length != 0 ? (
               messages?.map(({ _id, message, sender, _creationTime }) => (
@@ -65,14 +65,14 @@ const MessageTerminal = () => {
                 />
               ))
             ) : (
-              <div className="flex flex-col w-full h-svh justify-center overflow-y-auto overflow-x-hidden">
+              <div className="flex flex-col w-full h-svh justify-center overflow-y-auto overflow-x-hidden bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white">
                 <h1 className="text-2xl text-center">No current messages.</h1>
               </div>
             )}
           </div>
         )}
         <form
-          className="flex flex-row w-5/6 lg:w-1/2 justify-between items-center absolute bottom-6 gap-4 bg-zinc-200 text-black"
+          className="flex flex-row w-5/6 lg:w-1/2 justify-between items-center absolute bottom-6 gap-4 bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white"
           action="submit"
           onSubmit={(e) => sendMessage(e)}
         >
@@ -86,7 +86,7 @@ const MessageTerminal = () => {
             onChange={(e) => setText(e.target.value)}
           ></input>
           <button
-            className="flex justify-center items-center w-1/3 p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-600 transition-colors duration-300"
+            className="flex justify-center items-center w-1/3 p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-500 transition-colors duration-200"
             type="submit"
           >
             Send
