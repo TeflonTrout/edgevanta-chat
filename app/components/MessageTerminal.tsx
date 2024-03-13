@@ -42,7 +42,7 @@ const MessageTerminal = () => {
   return (
     <div className="flex flex-col w-full max-h-full sm:max-w-2/3 justify-start items-center bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white">
       <div
-        className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar"
+        className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar border-zinc-800 dark:border-zinc-200"
         style={{ maxHeight: "70vh" }}
       >
         {isLoading ? (

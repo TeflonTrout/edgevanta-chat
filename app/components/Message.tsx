@@ -32,12 +32,11 @@ const Message = ({
       <p
         style={{
           background: `${getUserByUsername?.[0]?.color}`,
-          mixBlendMode: "difference",
         }}
         className={
           isCurrentSender
-            ? "flex flex-col text-xl max-w-md w-auto py-2 px-3 h-auto break-normal rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl bg-slate-300 text-black"
-            : "flex flex-col text-xl max-w-md w-auto py-2 px-3 h-auto break-normal rounded-tl-2xl rounded-tr-2xl rounded-br-2xl bg-slate-800 text-white"
+            ? "flex flex-col text-xl max-w-md w-auto py-2 px-3 h-auto break-normal rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl  text-white"
+            : "flex flex-col text-xl max-w-md w-auto py-2 px-3 h-auto break-normal rounded-tl-2xl rounded-tr-2xl rounded-br-2xl text-white"
         }
       >
         {message}
