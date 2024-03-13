@@ -82,13 +82,13 @@ const User = ({ params }: { params: { username: string } }) => {
             </div>
             <div className="flex w-2/3 justify-between items-center mt-4">
               <button
-                className="flex justify-center items-center w-auto p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-600 transition-colors duration-300"
+                className="flex justify-center items-center w-auto p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-500 transition-colors duration-200"
                 type="submit"
               >
                 Update
               </button>
               <Link href={`/message/${username}`}>
-                <h1 className="flex justify-center items-center w-auto p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-600 transition-colors duration-300">
+                <h1 className="flex justify-center items-center w-auto p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-500 transition-colors duration-200">
                   Messages
                 </h1>
               </Link>
@@ -97,8 +97,8 @@ const User = ({ params }: { params: { username: string } }) => {
           <h1
             className={
               isUpdated
-                ? "text-2xl text-center flex mt-8 transition-all duration-300"
-                : "text-transparent transition-all duration-300"
+                ? "text-2xl text-center flex mt-8 transition-all duration-200"
+                : "text-transparent transition-all duration-200"
             }
           >
             Profile Updated Successfully!
@@ -106,8 +106,8 @@ const User = ({ params }: { params: { username: string } }) => {
           <h1
             className={
               isError
-                ? "text-2xl text-red-700 text-center flex mt-8 transition-all duration-300"
-                : "text-transparent transition-all duration-300"
+                ? "text-2xl text-red-700 text-center flex mt-8 transition-all duration-200"
+                : "text-transparent transition-all duration-200"
             }
           >
             Oops, Something Went Wrong!

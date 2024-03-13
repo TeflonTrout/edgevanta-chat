@@ -45,8 +45,8 @@ const Message = ({
       <p
         className={
           isCurrentSender
-            ? "flex w-auto py-1 text-sm justify-end items-start text-zinc-400"
-            : "flex w-auto py-1 text-sm justify-start items-start text-zinc-400"
+            ? "flex w-auto py-1 text-sm justify-end items-start text-zinc-400 dark:text-zinc-300"
+            : "flex w-auto py-1 text-sm justify-start items-start text-zinc-400 dark:text-zinc-300"
         }
       >
         {isCurrentSender ? `${sender} (You)` : sender}{" "}

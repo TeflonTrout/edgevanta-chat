@@ -47,7 +47,7 @@ const NewUser = () => {
             onChange={(e) => setColor(e.target.value)}
           />
         </div>
-        <button className="flex justify-center items-center w-auto mt-4 p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-600 transition-colors duration-300">
+        <button className="flex justify-center items-center w-auto mt-4 p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-500 transition-colors duration-200">
           Create
         </button>
       </form>
