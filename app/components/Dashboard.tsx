@@ -5,7 +5,7 @@ import React from "react";
 const Dashboard = () => {
   return (
     <div className="flex w-full justify-center items-center bg-zinc-200 text-edgevanta">
-      <ul className="flex w-full lg:w-2/3 justify-between lg:justify-evenly align-middle items-center mx-4 my-4">
+      <ul className="flex w-5/6 lg:w-1/2 justify-between align-middle items-center mx-4 my-4">
         <li className="flex">
           <Link href="/">
             <div className="flex justify-center items-center">
