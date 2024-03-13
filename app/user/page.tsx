@@ -8,15 +8,15 @@ const User = () => {
   const userList = useQuery(api.users.getAllUsers);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full dark:bg-zinc-500 dark:text-white transition-colors duration-200">
-      <div className="flex flex-col w-1/2 justify-center items-center">
+    <div className="flex flex-col justify-center items-center w-full bg-zinc-200 dark:bg-zinc-500 dark:text-white ">
+      <div className="flex flex-col w-1/2 justify-center items-center bg-zinc-200 dark:bg-zinc-500 dark:text-white">
         {userList?.length != 0
           ? userList?.map(({ _id, username }) => (
               <div
                 key={_id}
-                className="flex m-4 w-1/2 justify-between transition-colors duration-200"
+                className="flex m-4 w-1/2 justify-between bg-zinc-200 dark:bg-zinc-500 dark:text-white "
               >
-                <h1 className="text-black dark:text-white text-4xl items-center w-1/3">
+                <h1 className="text-black bg-zinc-200 dark:bg-zinc-500 dark:text-white text-4xl items-center w-1/3">
                   {username}
                 </h1>
                 <div className="flex justify-between items-center gap-4">

@@ -12,6 +12,13 @@ export const get = query({
   },
 });
 
+export const getAllMessages = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("messages").collect();
+  },
+});
+
 // Create a new task with the given text
 export const createMessage = mutation({
   args: { text: v.string(), sender: v.string() },

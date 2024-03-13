@@ -7,10 +7,12 @@ import Message from "./Message";
 import Loading from "./Loading/Loading";
 
 const MessageTerminal = () => {
+  const [displayedMessageCount, setDisplayedMessageCount] = useState(10);
   const [text, setText] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const listRef = useRef<HTMLInputElement>(null);
-  const messages = useQuery(api.messages.get);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messages = useQuery(api.messages.getAllMessages);
   const path = usePathname();
   // Parse the current route and set it to the sender
   // And capitalize sender
@@ -39,10 +41,23 @@ const MessageTerminal = () => {
     setText("");
   };
 
+  const handleLoadMore = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // Increase the number of displayed messages by 10
+    setDisplayedMessageCount((prevCount) => prevCount + 10);
+  };
+
+  useEffect(() => {
+    // Preserve scroll position when messages are added
+    if (listRef.current) {
+      listRef.current.scrollTop = listRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className="flex flex-col w-full max-h-full sm:max-w-2/3 justify-start items-center bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white">
       <div
-        className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar"
+        className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar border-zinc-800 dark:border-zinc-200"
         style={{ maxHeight: "70vh" }}
       >
         {isLoading ? (
@@ -54,16 +69,27 @@ const MessageTerminal = () => {
             ref={listRef}
             className="flex flex-col w-full h-svh justify-start py-6 px-4 pb-0 overflow-y-auto overflow-x-hidden bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white"
           >
+            {messages?.length && displayedMessageCount < messages?.length ? (
+              <button
+                className="flex w-full flex-col justify-center items-center text-lg text-black dark:text-white"
+                onClick={(e) => handleLoadMore(e)}
+              >
+                Load More Messages...
+              </button>
+            ) : null}
             {messages?.length != 0 ? (
-              messages?.map(({ _id, message, sender, _creationTime }) => (
-                <Message
-                  key={_id}
-                  message={message}
-                  sender={sender}
-                  isCurrentSender={sender == messageSender ? true : false}
-                  timestamp={_creationTime}
-                />
-              ))
+              messages
+                ?.slice(-displayedMessageCount)
+                ?.map(({ _id, message, sender, _creationTime }, idx) => (
+                  <div key={_id} ref={idx === 0 ? messagesEndRef : null}>
+                    <Message
+                      message={message}
+                      sender={sender}
+                      isCurrentSender={sender == messageSender ? true : false}
+                      timestamp={_creationTime}
+                    />
+                  </div>
+                ))
             ) : (
               <div className="flex flex-col w-full h-svh justify-center overflow-y-auto overflow-x-hidden bg-zinc-200 text-black dark:bg-zinc-500 dark:text-white">
                 <h1 className="text-2xl text-center">No current messages.</h1>
