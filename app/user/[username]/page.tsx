@@ -5,6 +5,7 @@ import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 
 const User = ({ params }: { params: { username: string } }) => {
+  const [isUpdated, setIsUpdated] = useState<boolean | null>(null);
   const getUserByUsername = useQuery(api.users.getUserByUsername, {
     username: params.username,
   });
@@ -14,6 +15,7 @@ const User = ({ params }: { params: { username: string } }) => {
   const [userColor, setUserColor] = useState<string>("");
   const [userId, setUserId] = useState<any>("");
   const [userFound, setUserFound] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     if (getUserByUsername?.length) {
@@ -26,17 +28,33 @@ const User = ({ params }: { params: { username: string } }) => {
 
   const updateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateUserByUsername({ username: username, color: userColor, id: userId });
+    try {
+      updateUserByUsername({
+        username: username,
+        color: userColor,
+        id: userId,
+      });
+      setIsUpdated(true);
+      setTimeout(() => {
+        setIsUpdated(null);
+      }, 5000);
+    } catch (e) {
+      console.log(e);
+      setIsError(true);
+    }
   };
 
   return (
     <div className="flex w-full justify-center items-center">
       {userFound == true ? (
-        <>
+        <div className="flex flex-col justify-center items-center w-1/2">
+          <h1 className="text-2xl text-center mb-5 underline">
+            Welcome Back {username}!
+          </h1>
           <form
             action="submit"
             onSubmit={(e) => updateUser(e)}
-            className="flex flex-col w-1/2 justify-center items-center gap-2"
+            className="flex flex-col w-full justify-center items-center gap-2"
           >
             <div className="flex justify-between items-center m-2 w-full">
               <label htmlFor="username" className="flex w-1/2">
@@ -76,7 +94,25 @@ const User = ({ params }: { params: { username: string } }) => {
               </Link>
             </div>
           </form>
-        </>
+          <h1
+            className={
+              isUpdated
+                ? "text-2xl text-center flex mt-8 transition-all duration-300"
+                : "text-transparent transition-all duration-300"
+            }
+          >
+            Profile Updated Successfully!
+          </h1>
+          <h1
+            className={
+              isError
+                ? "text-2xl text-red-700 text-center flex mt-8 transition-all duration-300"
+                : "text-transparent transition-all duration-300"
+            }
+          >
+            Oops, Something Went Wrong!
+          </h1>
+        </div>
       ) : (
         <div>No User Found.</div>
       )}
