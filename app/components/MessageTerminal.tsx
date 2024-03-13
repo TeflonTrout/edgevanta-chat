@@ -43,7 +43,7 @@ const MessageTerminal = () => {
     <div className="flex flex-col w-full max-h-full sm:max-w-2/3 justify-start items-center bg-zinc-200 text-black">
       <div
         className="flex flex-col w-5/6 lg:w-1/2 border-4 rounded-lg z-10 scrollbar border-zinc-800"
-        style={{ maxHeight: "70vh" }}
+        style={{ maxHeight: "65vh" }}
       >
         {isLoading ? (
           <div className="flex flex-col w-full h-svh justify-center items-center border rounded border-zinc-800">
