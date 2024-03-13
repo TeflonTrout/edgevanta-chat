@@ -1,0 +1,97 @@
+"use client";
+import React, { useRef, useEffect, useState } from "react";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { usePathname } from "next/navigation";
+import Message from "./Message";
+import Loading from "./Loading/Loading";
+
+const MessageTerminal = () => {
+  const [text, setText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const listRef = useRef<HTMLInputElement>(null);
+  const messages = useQuery(api.messages.get);
+  const path = usePathname();
+  // Parse the current route and set it to the sender
+  // And capitalize sender
+  let messageSender = path.replace("/", "");
+  messageSender = messageSender[0].toUpperCase() + messageSender.slice(1);
+  const createMessage = useMutation(api.messages.createMessage);
+
+  // Loading listener
+  useEffect(() => {
+    if (messages?.length && messages?.length > 0) {
+      setIsLoading(false);
+    }
+  }, [messages]);
+
+  // Scroll to bottom of chat after loading
+  useEffect(() => {
+    const element = listRef.current;
+    if (element) {
+      listRef.current?.lastElementChild?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isLoading]);
+
+  const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createMessage({ text, sender: messageSender });
+    setText("");
+  };
+
+  return (
+    <div className="flex flex-col w-full max-h-full sm:max-w-2/3 justify-start items-center bg-zinc-200 text-black">
+      <div className="flex flex-col w-2/3 md:w-5/6 max-h-96 min-h-96 border-4 rounded-lg z-10 scrollbar border-zinc-800">
+        {isLoading ? (
+          <div className="flex flex-col w-full max-h-96 min-h-96 justify-center items-center border rounded border-zinc-800">
+            <Loading />
+          </div>
+        ) : (
+          <div
+            ref={listRef}
+            className="flex flex-col w-full justify-start py-6 px-4 pb-0 overflow-y-auto overflow-x-hidden"
+          >
+            {messages?.length != 0 ? (
+              messages?.map(({ _id, message, sender, _creationTime }) => (
+                <Message
+                  key={_id}
+                  message={message}
+                  sender={sender}
+                  isCurrentSender={sender == messageSender ? true : false}
+                  timestamp={_creationTime}
+                />
+              ))
+            ) : (
+              <div>
+                <h1>No current messages.</h1>
+              </div>
+            )}
+          </div>
+        )}
+        <form
+          className="flex flex-row w-2/3 md:w-5/6 justify-between items-center absolute bottom-6 gap-4 bg-zinc-200 text-black"
+          action="submit"
+          onSubmit={(e) => sendMessage(e)}
+        >
+          <input
+            className="flex p-2 w-5/6 rounded h-10 text-black outline-none"
+            name="message"
+            type="text"
+            disabled={isLoading ? true : false}
+            placeholder="Write Message"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          ></input>
+          <button
+            className="flex justify-center items-center h w-1/6 p-2 border bg-zinc-800 text-white border-zinc-800 rounded hover:bg-zinc-600 transition-colors duration-300"
+            type="submit"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default MessageTerminal;
