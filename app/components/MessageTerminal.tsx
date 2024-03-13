@@ -15,7 +15,7 @@ const MessageTerminal = () => {
   // Parse the current route and set it to the sender
   // And capitalize sender
   let messageSender = path.split("/")?.[2];
-  messageSender = messageSender[0].toUpperCase() + messageSender.slice(1);
+  messageSender = messageSender?.[0].toUpperCase() + messageSender.slice(1);
   const createMessage = useMutation(api.messages.createMessage);
 
   // Loading listener

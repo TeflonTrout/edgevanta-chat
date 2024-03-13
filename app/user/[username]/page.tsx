@@ -19,9 +19,9 @@ const User = ({ params }: { params: { username: string } }) => {
 
   useEffect(() => {
     if (getUserByUsername?.length) {
-      setUsername(getUserByUsername[0]?.username);
-      setUserColor(getUserByUsername[0]?.color);
-      setUserId(getUserByUsername[0]?._id);
+      setUsername(getUserByUsername?.[0]?.username);
+      setUserColor(getUserByUsername?.[0]?.color);
+      setUserId(getUserByUsername?.[0]?._id);
       setUserFound(true);
     }
   }, [getUserByUsername]);
