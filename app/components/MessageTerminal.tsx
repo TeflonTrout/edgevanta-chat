@@ -20,8 +20,8 @@ const MessageTerminal = () => {
 
   // Loading listener
   useEffect(() => {
+    setIsLoading(false);
     if (messages?.length && messages?.length > 0) {
-      setIsLoading(false);
     }
   }, [messages]);
 
