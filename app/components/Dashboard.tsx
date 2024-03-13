@@ -19,10 +19,7 @@ const Dashboard = () => {
           </Link>
         </li>
         <li className="flex text-2xl text-edgevanta">
-          <Link href="/alice">Alice</Link>
-        </li>
-        <li className="flex text-2xl text-edgevanta">
-          <Link href="/bob">Bob</Link>
+          <Link href="/user">Users</Link>
         </li>
       </ul>
     </div>

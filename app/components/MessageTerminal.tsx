@@ -14,14 +14,14 @@ const MessageTerminal = () => {
   const path = usePathname();
   // Parse the current route and set it to the sender
   // And capitalize sender
-  let messageSender = path.replace("/", "");
+  let messageSender = path.split("/")?.[2];
   messageSender = messageSender[0].toUpperCase() + messageSender.slice(1);
   const createMessage = useMutation(api.messages.createMessage);
 
   // Loading listener
   useEffect(() => {
+    setIsLoading(false);
     if (messages?.length && messages?.length > 0) {
-      setIsLoading(false);
     }
   }, [messages]);
 
